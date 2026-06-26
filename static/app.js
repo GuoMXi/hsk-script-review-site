@@ -615,6 +615,7 @@ if (saved?.owner && saved?.repo && saved?.token) {
   fillSettings(saved);
   initializeFromConfig(saved).catch((err) => { setStatus(err.message, 'err'); settingsDialog.showModal(); });
 } else {
-  fillSettings(saved || { owner: 'GuoMXi', branch: 'main', rootPath: 'work/question_bank/题库_按试卷' });
+  fillSettings(saved || { owner: 'GuoMXi', branch: 'main', rootPath: '' });
   settingsDialog.showModal();
 }
+
