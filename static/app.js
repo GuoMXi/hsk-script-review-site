@@ -85,7 +85,7 @@ function fillSettings(config = {}) {
   $('ownerInput').value = config.owner || 'GuoMXi';
   $('repoInput').value = config.repo || '';
   $('branchInput').value = config.branch || 'main';
-  $('rootPathInput').value = config.rootPath || 'work/question_bank/题库_按试卷';
+  $('rootPathInput').value = config.rootPath || '';
   $('tokenInput').value = config.token || '';
   $('rememberTokenInput').checked = Boolean(config.token);
 }
@@ -140,7 +140,8 @@ async function getContent(path) {
 }
 
 async function fetchBlob(path) {
-  const res = await github(repoApi(`/contents/${encodePath(path)}`), {
+  const q = `?ref=${encodeURIComponent(state.config.branch)}`;
+  const res = await github(repoApi(`/contents/${encodePath(path)}${q}`), {
     accept: 'application/vnd.github.raw',
     raw: true,
   });
@@ -618,4 +619,5 @@ if (saved?.owner && saved?.repo && saved?.token) {
   fillSettings(saved || { owner: 'GuoMXi', branch: 'main', rootPath: '' });
   settingsDialog.showModal();
 }
+
 
