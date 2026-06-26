@@ -1,0 +1,74 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HSK 脚本云端校对</title>
+  <link rel="stylesheet" href="./static/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">HSK 脚本云端校对</div>
+    <div class="controls">
+      <button id="settingsBtn" type="button">仓库设置</button>
+      <label>等级<select id="levelSelect"></select></label>
+      <label>试卷<select id="examSelect"></select></label>
+      <label>PDF<select id="pdfSelect"></select></label>
+      <button id="reloadBtn" type="button">重新加载</button>
+      <button id="reviewBtn" type="button">标为完成</button>
+      <label class="wrap-control"><input id="wrapToggle" type="checkbox" checked />自动换行</label>
+      <button id="saveBtn" type="button">保存脚本</button>
+    </div>
+    <div id="status" class="status">请先配置仓库</div>
+  </header>
+
+  <main class="workspace">
+    <section class="pane pdf-pane">
+      <div class="pane-title">
+        <span id="pdfTitle">原 PDF</span>
+        <a id="openPdf" target="_blank" rel="noreferrer">新窗口打开</a>
+      </div>
+      <iframe id="pdfFrame" title="原 PDF"></iframe>
+      <div class="image-panel">
+        <div class="image-toolbar">
+          <span id="imageTitle">图片资源</span>
+          <button id="copyImagePathBtn" type="button">复制路径</button>
+          <button id="insertPictureBtn" type="button">插入图片</button>
+          <button id="uploadImageBtn" type="button">上传图片</button>
+          <input id="uploadImageInput" type="file" accept="image/*" hidden />
+        </div>
+        <div id="pasteImageTarget" class="paste-image-target" tabindex="0" contenteditable="true">点击这里或右侧脚本区，Ctrl+V 粘贴图片；会自动上传到 images/ 并插入路径</div>
+        <div id="imageGrid" class="image-grid"></div>
+      </div>
+    </section>
+
+    <section class="pane editor-pane">
+      <div class="pane-title">
+        <span id="scriptTitle">脚本语言试卷.md</span>
+        <span id="meta"></span>
+      </div>
+      <textarea id="editor" spellcheck="false"></textarea>
+    </section>
+  </main>
+
+  <dialog id="settingsDialog" class="settings-dialog">
+    <form method="dialog" id="settingsForm">
+      <h2>GitHub 仓库设置</h2>
+      <p class="settings-note">网页只保存配置到本机浏览器。Token 不会写进网页代码。</p>
+      <label>Owner<input id="ownerInput" placeholder="GuoMXi" required /></label>
+      <label>Repo<input id="repoInput" placeholder="hsk-question-bank" required /></label>
+      <label>Branch<input id="branchInput" placeholder="main" value="main" required /></label>
+      <label>题库根路径<input id="rootPathInput" value="work/question_bank/题库_按试卷" required /></label>
+      <label>GitHub Token<input id="tokenInput" type="password" autocomplete="off" required /></label>
+      <label class="checkbox-line"><input id="rememberTokenInput" type="checkbox" />在本机浏览器记住 Token</label>
+      <div class="dialog-actions">
+        <button value="cancel" type="button" id="cancelSettingsBtn">取消</button>
+        <button value="default" type="submit">保存并加载</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="hoverImagePreview" class="hover-image-preview" aria-hidden="true"></div>
+  <script src="./static/app.js"></script>
+</body>
+</html>
