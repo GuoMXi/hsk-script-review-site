@@ -1,0 +1,101 @@
+﻿:root {
+  --bg: #f4f6f8;
+  --panel: #fff;
+  --line: #d8dee6;
+  --text: #17202a;
+  --muted: #667085;
+  --accent: #1d4ed8;
+  --accent-dark: #173ea6;
+  --ok: #047857;
+  --warn: #b45309;
+  --err: #b91c1c;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.45 "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+}
+.topbar {
+  height: 58px;
+  display: grid;
+  grid-template-columns: max-content 1fr max-content;
+  align-items: center;
+  gap: 18px;
+  padding: 10px 14px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+}
+.brand { font-size: 18px; font-weight: 700; white-space: nowrap; }
+.controls { display: flex; align-items: center; gap: 10px; min-width: 0; }
+label { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); white-space: nowrap; }
+select, button, input {
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--text);
+  font: inherit;
+}
+select { min-width: 104px; padding: 0 28px 0 10px; }
+input { padding: 0 10px; }
+#examSelect { min-width: 138px; }
+#pdfSelect { min-width: 180px; max-width: 280px; }
+button { padding: 0 12px; cursor: pointer; }
+button:hover { border-color: #aab4c1; }
+.wrap-control { height: 34px; padding: 0 8px; border: 1px solid var(--line); border-radius: 6px; background: #fff; color: var(--text); }
+.wrap-control input { margin: 0; height: auto; }
+#reviewBtn.reviewed { border-color: var(--ok); color: var(--ok); font-weight: 600; }
+#saveBtn { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+#saveBtn:hover { background: var(--accent-dark); }
+.status { min-width: 240px; text-align: right; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.status.ok { color: var(--ok); }
+.status.warn { color: var(--warn); }
+.status.err { color: var(--err); }
+.workspace { height: calc(100vh - 58px); display: grid; grid-template-columns: minmax(420px, 1fr) minmax(460px, 1fr); gap: 10px; padding: 10px; }
+.pane { min-width: 0; min-height: 0; display: grid; grid-template-rows: 38px 1fr; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.pane-title { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 0 12px; border-bottom: 1px solid var(--line); background: #fbfcfd; color: var(--muted); }
+.pane-title span:first-child { color: var(--text); font-weight: 650; }
+.pane-title a { color: var(--accent); text-decoration: none; white-space: nowrap; }
+.pane-title a:hover { text-decoration: underline; }
+.pdf-pane { grid-template-rows: 38px minmax(0, 1fr) 182px; }
+#pdfFrame { width: 100%; height: 100%; border: 0; background: #e5e7eb; }
+.image-panel { min-height: 0; display: grid; grid-template-rows: 34px 42px 1fr; border-top: 1px solid var(--line); background: #f8fafc; }
+.image-toolbar { display: flex; align-items: center; gap: 8px; padding: 0 10px; border-bottom: 1px solid var(--line); color: var(--muted); }
+.image-toolbar span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.image-toolbar button { height: 26px; padding: 0 8px; font-size: 12px; }
+.paste-image-target { margin: 6px 8px 0; min-height: 30px; display: flex; align-items: center; justify-content: center; border: 1px dashed #9aa7b8; border-radius: 6px; background: #fff; color: var(--muted); font-size: 12px; outline: none; cursor: text; }
+.paste-image-target:focus, .paste-image-target.pasting { border-color: var(--accent); color: var(--accent); box-shadow: 0 0 0 2px rgba(29,78,216,.1); }
+.image-grid { min-height: 0; overflow: auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(86px, 1fr)); gap: 8px; padding: 8px; }
+.image-card { min-width: 0; border: 1px solid var(--line); border-radius: 6px; background: #fff; padding: 5px; cursor: pointer; }
+.image-card:hover { border-color: #aab4c1; }
+.image-card.selected { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(29,78,216,.14); }
+.image-card img { width: 100%; height: 72px; object-fit: contain; display: block; background: #eef2f7; }
+.image-card div { margin-top: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; color: var(--muted); }
+.image-empty { grid-column: 1 / -1; align-self: center; justify-self: center; color: var(--muted); font-size: 12px; }
+#editor { width: 100%; height: 100%; resize: none; border: 0; outline: none; padding: 14px 16px; font: 15px/1.65 Consolas, "Microsoft YaHei", "Noto Sans Mono", monospace; color: #111827; background: #fff; white-space: pre-wrap; overflow-wrap: anywhere; word-break: break-word; overflow: auto; }
+#editor.no-wrap { white-space: pre; overflow-wrap: normal; word-break: normal; }
+#meta { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; }
+.settings-dialog { width: min(640px, calc(100vw - 32px)); border: 1px solid var(--line); border-radius: 10px; padding: 0; box-shadow: 0 24px 72px rgba(15,23,42,.2); }
+.settings-dialog::backdrop { background: rgba(15,23,42,.35); }
+.settings-dialog form { padding: 20px; display: grid; gap: 12px; }
+.settings-dialog h2 { margin: 0; font-size: 20px; }
+.settings-note { margin: 0 0 6px; color: var(--muted); }
+.settings-dialog label { display: grid; grid-template-columns: 130px 1fr; align-items: center; color: var(--text); }
+.settings-dialog input { width: 100%; }
+.checkbox-line { grid-template-columns: max-content 1fr !important; color: var(--muted) !important; }
+.checkbox-line input { width: auto; height: auto; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 6px; }
+.hover-image-preview { position: fixed; z-index: 1000; width: 340px; max-width: min(340px, calc(100vw - 24px)); padding: 8px; border: 1px solid #b7c0cc; border-radius: 8px; background: #fff; box-shadow: 0 16px 42px rgba(15,23,42,.22); opacity: 0; transform: translateY(4px); pointer-events: none; transition: opacity .08s ease, transform .08s ease; }
+.hover-image-preview.visible { opacity: 1; transform: translateY(0); }
+.hover-image-preview img { display: block; width: 100%; max-height: 260px; object-fit: contain; background: #eef2f7; border-radius: 5px; }
+.hover-image-path { margin-top: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--muted); font-size: 12px; }
+.hover-image-missing { display: grid; place-items: center; height: 126px; border-radius: 5px; background: #fef2f2; color: var(--err); font-size: 13px; }
+@media (max-width: 980px) {
+  .topbar { height: auto; grid-template-columns: 1fr; align-items: stretch; }
+  .controls { flex-wrap: wrap; }
+  .status { text-align: left; }
+  .workspace { height: auto; min-height: calc(100vh - 120px); grid-template-columns: 1fr; grid-template-rows: 70vh 70vh; }
+}
