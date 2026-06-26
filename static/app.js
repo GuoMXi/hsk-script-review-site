@@ -139,13 +139,14 @@ async function getContent(path) {
   return github(repoApi(`/contents/${encodePath(path)}${q}`));
 }
 
-async function fetchBlob(path) {
+async function fetchBlob(path, mimeType = '') {
   const q = `?ref=${encodeURIComponent(state.config.branch)}`;
   const res = await github(repoApi(`/contents/${encodePath(path)}${q}`), {
     accept: 'application/vnd.github.raw',
     raw: true,
   });
-  return res.blob();
+  const buffer = await res.arrayBuffer();
+  return new Blob([buffer], { type: mimeType || res.headers.get('content-type') || '' });
 }
 
 async function putContent(path, textOrBase64, message, sha = null, encoded = false) {
@@ -349,7 +350,7 @@ function renderPdfs() {
 async function setPdf(name) {
   if (!name || !state.current) return;
   setStatus('正在读取 PDF...');
-  const blob = await fetchBlob(pathJoin(state.current.folder, name));
+  const blob = await fetchBlob(pathJoin(state.current.folder, name), 'application/pdf');
   const url = URL.createObjectURL(blob);
   state.objectUrls.push(url);
   pdfFrame.src = url;
@@ -619,5 +620,6 @@ if (saved?.owner && saved?.repo && saved?.token) {
   fillSettings(saved || { owner: 'GuoMXi', branch: 'main', rootPath: '' });
   settingsDialog.showModal();
 }
+
 
 
